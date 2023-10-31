@@ -3,7 +3,7 @@ import { type FC } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { Button, Form, Input, Select } from "antd";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
   input {
@@ -66,13 +66,17 @@ const onFinishFailed = (errorInfo: any) => {
 };
 
 const Tadd: FC = () => {
+  const navigate = useNavigate();
   return (
     <Div className="home-container p-[20px] h-[100%] overflow-auto">
       <div className="add-header-heading">
-        <div className="add-back">
-          <NavLink to={-1}>
-            <Icon icon="solar:arrow-left-outline" className=" text-[20px]" />
-          </NavLink>
+        <div
+          className="add-back"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          <Icon icon="solar:arrow-left-outline" className=" text-[20px]" />
         </div>
         <span className="add-header-title">新增物品标签组</span>
       </div>

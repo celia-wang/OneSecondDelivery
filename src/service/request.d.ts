@@ -29,4 +29,48 @@ namespace Req {
     current: number;
     pageSize: number;
   };
+  /**
+   * wsx
+   * 系统设置
+   */
+  // 小程序设置
+  type AppDevelopPostData = {
+    qqAppSecret?: string;
+    qqAppid?: string;
+    ttAppSecret?: string;
+    ttAppid?: string;
+    wxAppId: string;
+    wxAppSecret: string;
+  };
+  type AppPayPostData = {
+    wxMchId: string;
+    notifyUrl: string;
+    wxMchSecert: string;
+  };
+  type AppAliPostData = {
+    accessKeyId: string;
+    accessKeySecret: string;
+    arn: string;
+    ossBucket: string;
+    ossRegion: string;
+    smsSignName: string;
+    smsTemplateCode: string;
+  };
+  type AppComwxPostData = {
+    corpid: string;
+    corpsecret: string;
+    verifyChatid?: string;
+  };
+  type AppCreatePostData = {
+    name: string;
+    owner: string;
+    userlist: string[];
+  }[];
+  //分享设置
+  type ShareData = {
+    desc?: string;
+    path?: string;
+    title?: string;
+    url?: string;
+  };
 }

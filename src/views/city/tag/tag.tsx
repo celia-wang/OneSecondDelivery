@@ -100,12 +100,12 @@ const Tag: FC = () => {
   const TagList: DataType[] = [];
   data?.data.data.data.forEach((tlist) => {
     TagList.push({
-      groupName: `${tlist.groupName}`,
-      tag: `${tlist.tags[0]}`,
+      groupName: `${tlist?.groupName}`,
+      tag: `${tlist?.tags[0]}`,
       time: (
         <div>
-          <div className=" text-[12px]">创建:{tlist.createTime}</div>
-          <div className=" text-[12px]">更新:{tlist.updateTime}</div>
+          <div className=" text-[12px]">创建:{tlist?.createTime}</div>
+          <div className=" text-[12px]">更新:{tlist?.updateTime}</div>
         </div>
       )
     });

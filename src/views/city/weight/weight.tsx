@@ -100,12 +100,12 @@ const Weight: FC = () => {
   const WeightList: DataType[] = [];
   data?.data.data.data.forEach((wlist) => {
     WeightList.push({
-      tagName: `${wlist.tagName}`,
-      weightTag: `${wlist.tags[0].label}`,
+      tagName: `${wlist?.tagName}`,
+      weightTag: `${wlist?.tags[0]?.label}`,
       time: (
         <div>
-          <div className=" text-[12px]">创建:{wlist.createTime}</div>
-          <div className=" text-[12px]">更新:{wlist.updateTime}</div>
+          <div className=" text-[12px]">创建:{wlist?.createTime}</div>
+          <div className=" text-[12px]">更新:{wlist?.updateTime}</div>
         </div>
       )
     });
