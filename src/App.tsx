@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ConfigProvider } from "antd";
 
 import Layout from "./layout/Layout";
-
 import Home from "./views/home/Home";
 import Login from "./views/Login/login";
 import Citys from "./views/city/citys";
@@ -33,8 +32,12 @@ import Registers from "./views/rider/registers";
 import Riders from "./views/rider/riders";
 import Agents from "./views/user/agent/agents";
 import Admins from "./views/user/admins";
+import AgentsAdd from "./views/user/agent/agentadd";
+import AdminAdd from "./views/user/agent/adminadd";
 import Users from "./views/user/users";
 import AgreementRider from "./views/config/agreementRider";
+import Agentupdata from "./views/user/edit/agentsupdata";
+import Adminupdata from "./views/user/edit/adminupdata";
 
 const App: FC = () => {
   return (
@@ -49,11 +52,17 @@ const App: FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/user/agent/agents" element={<Agents />} />
+            <Route path="/user/agent/edit/add" element={<AgentsAdd />} />
+            <Route path="/user/edit/add" element={<AdminAdd />} />
             <Route path="/user/admins" element={<Admins />} />
+            <Route path="/user/edit/update/:id" element={<Adminupdata />} />
+            <Route
+              path="/user/agent/edit/update/:id"
+              element={<Agentupdata />}
+            />
             <Route path="/user/users" element={<Users />} />
             <Route path="/order/orders" element={<Oders />} />
             <Route path="/order/capitaltrend" element={<Capitaltrend />} />
