@@ -73,4 +73,34 @@ namespace Req {
     title?: string;
     url?: string;
   };
+  type AdminCouponStatus = {
+    couponNo: string;
+    status: string;
+  };
+  type AdminCouponListChange = {
+    conditionService?: string;
+    couponName?: string;
+    current: number;
+    pageSize: number;
+    status?: number;
+  };
+  type AdminCouponAdd = {
+    conditionService: string;
+    conditionsAmount: number;
+    couponName: string;
+    deadlineDays: string;
+    discountAmount: number;
+    limitNumber: number;
+    status: number;
+  };
+  type AdminCouponUpdate = {
+    conditionService: string;
+    conditionsAmount: number;
+    couponName: string;
+    couponNo: string;
+    deadlineDays: string;
+    discountAmount: number;
+    limitNumber: number;
+    status: number;
+  };
 }

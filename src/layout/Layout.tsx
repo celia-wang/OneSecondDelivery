@@ -180,7 +180,7 @@ const layout: FC = () => {
   // 样式
   const { Header, Sider, Content } = Layout;
   const layoutStyle = {
-    width: "100vw",
+    // width: "100vw",
     minWidth: "1200px",
     height: "100vh",
     backgroundColor: "#f3f3f3",
