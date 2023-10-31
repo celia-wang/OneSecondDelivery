@@ -138,3 +138,95 @@ export const adminCouponAdd = async (params: Req.AdminCouponAdd) =>
 // 修改优惠券接口
 export const adminCouponUpdate = async (params: Req.AdminCouponUpdate) =>
   await request.put<Res.AdminCouponStatus>("/api/admin/coupon/update", params);
+// 数据总览数据
+export const DataOverview = async () =>
+  await request.get<Req.DataOverview>("/api/admin/analysis/total");
+
+// 订单数据
+export const OrderData = async (params: {
+  beginDate: string;
+  endDate: string;
+}) =>
+  await request.get<Req.OrderData>("/api/admin/analysis/order/status", {
+    params
+  });
+
+// 代理列表
+export const broker = async (data: any) =>
+  await request.get<Req.brokerData>("/api/admin/agent/list", { params: data });
+
+// 代理启用禁用
+export const updateUserInfo = async (agentNo: string, status: number) =>
+  await request.put("/api/admin/agent/status", {
+    agentNo: agentNo,
+    status: status
+  });
+
+// 代理重置密码
+export const ResetPassword = async (agentNo: string) =>
+  await request.put<Res.ResetPassword>("/api/admin/agent/resetpwd", {
+    agentNo: agentNo
+  });
+
+// 修改代理信息
+export const updataAgent = async (data: {
+  agentAccount: string;
+  mobileNumber: string;
+  realName: string;
+  status: number;
+}) => await request.put("/api/admin/agent/update", data);
+
+// 管理员列表
+export const ListAdministrators = async (data: {
+  current: number;
+  pageSize: number;
+}) => await request.get<Req.AdminData>("/api/admin/list", { params: data });
+
+// 启用禁用
+export const updateAdmin = async (adminNo: string, status: number) =>
+  await request.put("/api/admin/status", {
+    adminNo: adminNo,
+    status: status
+  });
+
+// 管理重置密码
+export const AdminPassword = async (adminNo: string) =>
+  await request.put<Res.ResetPassword>("/api/admin/resetpwd", {
+    adminNo: adminNo
+  });
+
+// 用户列表
+export const ListUsers = async (data: { current: number; pageSize: number }) =>
+  await request.get<Req.ListUsersData>("/api/admin/user/list", {
+    params: data
+  });
+
+// 用户启用禁用
+export const updateUsers = async (userNo: string, status: number) =>
+  await request.put("/api/admin/user/status", {
+    userNo: userNo,
+    status: status
+  });
+
+// 添加代理
+export const Addproxies = async (params: {
+  agentAccount: string;
+  mobileNumber: string;
+  realName: string;
+  status: number;
+}) => await request.post("/api/admin/agent/add", params);
+
+// 添加管理员
+export const AddAdmin = async (params: {
+  adminName: string;
+  mobileNumber: string;
+  realName: string;
+}) => await request.post("/api/admin/add", params);
+
+// 修改管理员信息
+export const updataAdmin = async (data: {
+  adminName: string;
+  mobileNumber: string;
+  realName: string;
+  adminNo: string;
+}) => await request.put("/api/admin/update", data);

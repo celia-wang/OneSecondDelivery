@@ -239,4 +239,5 @@ namespace Res {
     code: number;
     msg: string;
   };
+  type ResetPassword = { code: number; msg: string };
 }
