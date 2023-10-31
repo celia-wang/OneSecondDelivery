@@ -9,6 +9,9 @@ import Login from "./views/Login/login";
 import Citys from "./views/city/citys";
 import Tag from "./views/city/tag/tag";
 import Valuations from "./views/city/valuation/valuations";
+import Vadd from "./views/city/valuation/enit/add";
+import Wadd from "./views/city/weight/enit/add";
+import Tadd from "./views/city/tag/enit/add";
 import Weight from "./views/city/weight/weight";
 import Apps from "./views/config/app";
 import Cash from "./views/config/cash";
@@ -59,8 +62,11 @@ const App: FC = () => {
             <Route path="/rider/cash" element={<RiderCash />} />
             <Route path="/city/citys" element={<Citys />} />
             <Route path="/city/valuation/valuations" element={<Valuations />} />
+            <Route path="/city/valuation/enit/add" element={<Vadd />} />
             <Route path="/city/weight/weight" element={<Weight />} />
+            <Route path="/city/weight/enit/add" element={<Wadd />} />
             <Route path="/city/tag/tag" element={<Tag />} />
+            <Route path="/city/tag/enit/add" element={<Tadd />} />
             <Route path="/coupon/coupons" element={<Coupons />} />
             <Route path="/coupon/setting" element={<Setting />} />
             <Route path="/config/cash" element={<Cash />} />
