@@ -54,17 +54,17 @@ const Valuations: FC = () => {
     ValuationList.push({
       key: index,
       ruleName: `${vlist.ruleName}`,
-      distanceRule: `在${vlist.ruleContext.distance[0].gt}~${vlist.ruleContext.distance[0].lte}公里范围内，每1公里加价${vlist.ruleContext.distance[0].price}元`,
-      weightRule: `在${vlist.ruleContext.weight[0].gt}~${vlist.ruleContext.weight[0].lte}公斤范围内，每1公斤加价${vlist.ruleContext.weight[0].price}元`,
-      timeRule: `在${vlist.ruleContext.distance[0].gt}~${vlist.ruleContext.distance[0].lte}时间段内，加价${vlist.ruleContext.distance[0].price}元`,
+      distanceRule: `在${vlist?.ruleContext?.distance[0]?.gt}~${vlist?.ruleContext?.distance[0]?.lte}公里范围内，每1公里加价${vlist?.ruleContext?.distance[0]?.price}元`,
+      weightRule: `在${vlist?.ruleContext?.weight[0]?.gt}~${vlist?.ruleContext?.weight[0]?.lte}公斤范围内，每1公斤加价${vlist?.ruleContext?.weight[0]?.price}元`,
+      timeRule: `在${vlist?.ruleContext?.distance[0]?.gt}~${vlist?.ruleContext?.distance[0]?.lte}时间段内，加价${vlist?.ruleContext?.distance[0]?.price}元`,
       time: (
         <div>
           <div className=" text-[12px]">
             创建:
-            {`${vlist.createTime.split("T")[0]} ${
-              Number(vlist.createTime.split("T")[1].split(":")[0]) + 8 > 24
-                ? Number(vlist.createTime.split("T")[1].split(":")[0]) + 8 - 24
-                : Number(vlist.createTime.split("T")[1].split(":")[0]) + 8
+            {`${vlist?.createTime.split("T")[0]} ${
+              Number(vlist?.createTime.split("T")[1].split(":")[0]) + 8 > 24
+                ? Number(vlist?.createTime.split("T")[1].split(":")[0]) + 8 - 24
+                : Number(vlist?.createTime.split("T")[1].split(":")[0]) + 8
             }:${vlist.createTime.split("T")[1].split(":")[1]}`}
           </div>
           <div className=" text-[12px]">更新:{vlist.updateTime}</div>
@@ -73,7 +73,7 @@ const Valuations: FC = () => {
     });
   });
 
-  console.log(ValuationList);
+  // console.log(ValuationList);
 
   const columns: ColumnsType<DataType> = [
     {

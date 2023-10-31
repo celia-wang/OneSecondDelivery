@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 import dayjs from "dayjs";
 import { Button, Form, Input, Space, InputNumber, TimePicker } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
   input {
@@ -74,13 +74,23 @@ const onFinishFailed = (errorInfo: any) => {
 const format = "HH:mm";
 
 const vAdd: FC = () => {
+  const navigate = useNavigate();
   return (
     <Div className="home-container p-[20px] h-[100%] overflow-auto">
       <div className="add-header-heading">
-        <div className="add-back">
-          <NavLink to={-1}>
-            <Icon icon="solar:arrow-left-outline" className=" text-[20px]" />
-          </NavLink>
+        <div
+          className="add-back"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          <Icon
+            icon="solar:arrow-left-outline"
+            className=" text-[20px]"
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
         </div>
         <span className="add-header-title">新增计价规则</span>
       </div>
