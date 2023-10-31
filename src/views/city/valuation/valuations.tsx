@@ -50,7 +50,7 @@ interface DataType {
 const Valuations: FC = () => {
   const { data } = useRequest(getValuation);
   const ValuationList: DataType[] = [];
-  data?.data.data.data.forEach((vlist, index) => {
+  data?.data?.data?.data?.forEach((vlist, index) => {
     ValuationList.push({
       key: index,
       ruleName: `${vlist.ruleName}`,

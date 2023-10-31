@@ -122,3 +122,19 @@ export const riderAgreementData = async () =>
   await request.get<Res.userData>("/api/admin/config/agreement/rider");
 export const riderAgreementPostData = async (content: string | undefined) =>
   await request.post("/api/admin/config/agreement/rider", { content });
+
+// 优惠券列表接口
+export const adminCouponList = async (params: Req.AdminAgent) =>
+  await request.get<Res.AdminCouponList>("/api/admin/coupon/list", { params });
+
+// 优惠券状态的接口
+export const adminCouponStatus = async (params: Req.AdminCouponStatus) =>
+  await request.put<Res.AdminCouponStatus>("/api/admin/coupon/status", params);
+
+// 添加优惠券接口
+export const adminCouponAdd = async (params: Req.AdminCouponAdd) =>
+  await request.post<Res.AdminCouponStatus>("/api/admin/coupon/add", params);
+
+// 修改优惠券接口
+export const adminCouponUpdate = async (params: Req.AdminCouponUpdate) =>
+  await request.put<Res.AdminCouponStatus>("/api/admin/coupon/update", params);

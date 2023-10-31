@@ -22,6 +22,8 @@ import User from "./views/config/user";
 import Wxsubscribe from "./views/config/wxsubscribe";
 import Coupons from "./views/coupon/coupons";
 import Setting from "./views/coupon/setting";
+import CopAdd from "./views/coupon/add"; // 新增添加优惠券页面
+import CopUpdate from "./views/coupon/update"; // 新增添加优惠券页面
 import Cancelset from "./views/oder/cancelset";
 import Capitaltrend from "./views/oder/capitaltrend";
 import Feeset from "./views/oder/feeset";
@@ -69,6 +71,8 @@ const App: FC = () => {
             <Route path="/city/tag/enit/add" element={<Tadd />} />
             <Route path="/coupon/coupons" element={<Coupons />} />
             <Route path="/coupon/setting" element={<Setting />} />
+            <Route path="/coupon/coupons/add" element={<CopAdd />} />
+            <Route path="/coupon/coupons/update" element={<CopUpdate />} />
             <Route path="/config/cash" element={<Cash />} />
             <Route path="/config/app" element={<Apps />} />
             <Route path="/config/share" element={<Share />} />

@@ -209,4 +209,34 @@ namespace Res {
   };
   //用户指南
   type userData = { code: number; msg: string; data: { content: string } };
+
+  type AdminCouponList = {
+    code: number;
+    msg: string;
+    data: {
+      pageSize: number;
+      current: number;
+      count: number;
+      totalPages: number;
+      data: {
+        id: number;
+        createTime: string;
+        updateTime: string;
+        couponNo: string;
+        couponName: string;
+        deadlineDays: number;
+        discountAmount: number;
+        conditionsAmount: number;
+        conditionService: string;
+        cumulativeDrawNo: number;
+        cumulativeUseNo: number;
+        limitNumber: number;
+        status: number;
+      }[];
+    };
+  };
+  type AdminCouponStatus = {
+    code: number;
+    msg: string;
+  };
 }
