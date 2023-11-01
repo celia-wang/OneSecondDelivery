@@ -271,7 +271,7 @@ const Riders: FC = () => {
           htmlType="submit"
           className="h-[40px] my-[20px]"
           // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
-          onClick={() => navigate("/rider/cash")}
+          onClick={() => navigate("/rider/edit/add")}
         >
           新增一位骑手
         </Button>
