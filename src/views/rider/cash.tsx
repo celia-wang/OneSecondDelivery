@@ -1,200 +1,327 @@
-/* eslint-disable n/no-callback-literal */
-import { AppstoreAddOutlined, LoadingOutlined } from "@ant-design/icons";
-import { Icon } from "@iconify/react";
-import { Button, Form, Input, Radio, Upload, message } from "antd";
-import type {
-  RcFile,
-  UploadChangeParam,
-  UploadFile,
-  UploadProps
-} from "antd/es/upload";
-import { useState, type FC } from "react";
+import { type FC } from "react";
+import { Button, Radio } from "antd-mobile";
+import { TreeSelect, Input, Empty } from "antd";
+import { UndoOutline, LeftOutline, RightOutline } from "antd-mobile-icons";
+import { useState } from "react";
 
-const getBase64 = (img: RcFile, callback: (url: string) => void) => {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => {
-    callback(reader.result as string);
-  });
-  reader.readAsDataURL(img);
-};
+const treeData = [
+  {
+    value: "parent 1",
+    title: "状态：全部"
+  },
+  { value: "parent 2", title: "状态：提现成功" },
+  { value: "parent 3", title: "状态：待提现" },
+  { value: "parent 4", title: "状态：提现失败" }
+];
 
-const beforeUpload = (file: RcFile) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  if (!isJpgOrPng) {
-    void message.error("You can only upload JPG/PNG file!");
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    void message.error("Image must smaller than 2MB!");
-  }
-  return isJpgOrPng && isLt2M;
-};
 const Cash: FC = () => {
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
-  const handleChange: UploadProps["onChange"] = (
-    info: UploadChangeParam<UploadFile>
-  ) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === "done") {
-      getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-      });
-    }
+  const [value, setValue] = useState<string>();
+
+  const onChange = (newValue: string) => {
+    setValue(newValue);
   };
-
-  const uploadButton = (
-    <div>{loading ? <LoadingOutlined /> : <AppstoreAddOutlined />}</div>
-  );
   return (
-    <div
-      className="text-[#333]"
-      style={{
-        height: "calc(100vh - 60px - 60px)"
-      }}
-    >
-      <div className=" flex items-center px-[24px] py-[16px] box-border">
-        <Icon
-          icon="charm:arrow-left"
-          width="22"
-          className=" mr-[10px] font-bold"
-          onClick={() => {
-            window.history.back();
+    <>
+      <div className="text-[24px]">提现列表</div>
+      <div style={{ borderBottom: "1px solid #c8c4c4" }}>
+        <div>
+          <Input
+            placeholder="开户行"
+            style={{
+              width: "200px",
+              height: "40px",
+              padding: "4px 11px",
+              border: "1px solid #c8c4c4",
+              display: "inline-block",
+              color: "#333",
+              borderRadius: "4px",
+              boxSizing: "border-box",
+              marginTop: "20px",
+              marginRight: "10px",
+              fontSize: "14px",
+              marginBottom: "20px"
+            }}
+          />
+          <Input
+            placeholder="银行卡号"
+            style={{
+              width: "200px",
+              height: "40px",
+              padding: "4px 11px",
+              border: "1px solid #c8c4c4",
+              display: "inline-block",
+              color: "#333",
+              borderRadius: "4px",
+              boxSizing: "border-box",
+              marginTop: "20px",
+              marginRight: "10px",
+              fontSize: "14px"
+            }}
+          />
+          <Input
+            placeholder="真实姓名"
+            style={{
+              width: "200px",
+              height: "40px",
+              padding: "4px 11px",
+              border: "1px solid #c8c4c4",
+              display: "inline-block",
+              color: "#333",
+              borderRadius: "4px",
+              boxSizing: "border-box",
+              marginTop: "20px",
+              marginRight: "10px",
+              fontSize: "14px"
+            }}
+          />
+          <Input
+            placeholder="提现编号"
+            style={{
+              width: "200px",
+              height: "40px",
+              padding: "4px 11px",
+              border: "1px solid #c8c4c4",
+              display: "inline-block",
+              color: "#333",
+              borderRadius: "4px",
+              boxSizing: "border-box",
+              marginTop: "20px",
+              marginRight: "10px",
+              fontSize: "14px"
+            }}
+          />
+
+          <TreeSelect
+            style={{ width: "200px", height: "40px", borderRadius: "10px" }}
+            value={value}
+            dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+            placeholder="状态"
+            allowClear
+            treeDefaultExpandAll
+            onChange={onChange}
+            treeData={treeData}
+          />
+        </div>
+        <div style={{ marginTop: "20px", marginBottom: "25px" }}>
+          <Button
+            color="default"
+            fill="outline"
+            style={{
+              width: "120px",
+              height: "40px",
+              padding: "0 15px",
+              marginRight: "5px",
+              border: "1px solid #c8c4c4",
+              fontSize: "14px"
+            }}
+          >
+            取消
+          </Button>
+          <Button
+            color="danger"
+            fill="solid"
+            style={{
+              width: "120px",
+              height: "40px",
+              padding: "0 15px",
+              backgroundColor: "#955ce6",
+              border: "1px solid #955ce6",
+              fontSize: "14px"
+            }}
+          >
+            搜索
+          </Button>
+        </div>
+      </div>
+
+      <div style={{ margin: "30px 0", height: "40px" }}>
+        <div>
+          <Button
+            color="primary"
+            fill="outline"
+            style={{
+              width: "40px",
+              height: "40px",
+              float: "right",
+              border: "1px solid #c8c4c4"
+            }}
+          >
+            <UndoOutline style={{ color: "black" }} />
+          </Button>
+        </div>
+      </div>
+
+      <div>
+        <div>
+          <table>
+            <tbody>
+              <tr style={{ height: "53px" }}>
+                <th
+                  style={{
+                    width: "60px",
+                    border: "1px solid #c8c4c4",
+                    backgroundColor: "#fafafa"
+                  }}
+                >
+                  <Radio
+                    value="1"
+                    disabled
+                    style={{ width: "16px", height: "16px" }}
+                  ></Radio>
+                </th>
+                <th
+                  style={{
+                    width: "12%",
+                    border: "1px solid #c8c4c4",
+                    fontWeight: "400",
+                    backgroundColor: "#fafafa"
+                  }}
+                >
+                  编号
+                </th>
+                <th
+                  style={{
+                    width: "12%",
+                    border: "1px solid #c8c4c4",
+                    fontWeight: "400",
+                    backgroundColor: "#fafafa"
+                  }}
+                >
+                  提现用户
+                </th>
+                <th
+                  style={{
+                    width: "12%",
+                    border: "1px solid #c8c4c4",
+                    fontWeight: "400",
+                    backgroundColor: "#fafafa"
+                  }}
+                >
+                  用户
+                </th>
+                <th
+                  style={{
+                    width: "12%",
+                    border: "1px solid #c8c4c4",
+                    fontWeight: "400",
+                    backgroundColor: "#fafafa"
+                  }}
+                >
+                  提现金额
+                </th>
+                <th
+                  style={{
+                    width: "12%",
+                    border: "1px solid #c8c4c4",
+                    fontWeight: "400",
+                    backgroundColor: "#fafafa"
+                  }}
+                >
+                  提现账户
+                </th>
+                <th
+                  style={{
+                    width: "12%",
+                    border: "1px solid #c8c4c4",
+                    fontWeight: "400",
+                    backgroundColor: "#fafafa"
+                  }}
+                >
+                  状态
+                </th>
+                <th
+                  style={{
+                    width: "12%",
+                    border: "1px solid #c8c4c4",
+                    fontWeight: "400",
+                    backgroundColor: "#fafafa"
+                  }}
+                >
+                  时间
+                </th>
+                <th
+                  style={{
+                    width: "12%",
+                    border: "1px solid #c8c4c4",
+                    fontWeight: "400",
+                    backgroundColor: "#fafafa"
+                  }}
+                >
+                  操作
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          style={{
+            height: "175px",
+            border: "1px solid #c8c4c4",
+            borderTop: "0px",
+            padding: "16px"
           }}
-        />
-        <div className="text-[24px] font-[500]">骑手列表</div>
+        >
+          <div>
+            <div style={{ width: "150px", margin: "0 auto" }}>
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+            </div>
+          </div>
+        </div>
       </div>
-      {/* 新增 */}
-      <div className=" w-[600px] px-[50px] box-border">
-        <Form style={{ maxWidth: 500 }} layout="vertical">
-          <Form.Item
-            label="用户:"
-            name="1"
-            rules={[{ required: true, message: "手机号必填!" }]}
+
+      <div style={{ float: "right", marginTop: "20px", height: "24.5px" }}>
+        <ul style={{ height: "24.5px" }}>
+          <li style={{ display: "inline-block" }}>共 0 条数据</li>
+          <li
+            style={{ display: "inline-block", width: "24px", height: "24px" }}
           >
-            <div className=" flex">
-              <Input
-                placeholder="输入用户手机号查询"
-                className="h-[40px] border-r-0 rounded-r-none"
+            <a href="">
+              {" "}
+              <LeftOutline
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  margin: "0 auto ",
+                  marginTop: "12px",
+                  color: "#c8c4c4"
+                }}
               />
-              <Button
-                type="primary"
-                className="rounded-l-none h-[40px] bg-[#955ce6]"
-              >
-                查询
-              </Button>
-            </div>
-          </Form.Item>
-
-          {/* 姓名 */}
-          <Form.Item
-            label="真实姓名:"
-            name="2"
-            rules={[{ required: true, message: "请输入真实姓名" }]}
+            </a>
+          </li>
+          <li
+            style={{
+              display: "inline-block",
+              width: "22px",
+              height: "22px",
+              textAlign: "center"
+            }}
           >
-            <Input placeholder="请输入真实姓名" className="h-[40px]" />
-          </Form.Item>
-
-          {/* 身份证号码 */}
-          <Form.Item
-            label="身份证号码:"
-            name="3"
-            rules={[{ required: true, message: "请输入身份证号码" }]}
+            <a href="" style={{ color: "#c8c4c4" }}>
+              0
+            </a>
+          </li>
+          <li
+            style={{
+              display: "inline-block",
+              width: "24px",
+              height: "24px"
+            }}
           >
-            <Input placeholder="请输入身份证号码" className="h-[40px]" />
-          </Form.Item>
-
-          {/* 上传身份证头像面照片 */}
-          <Form.Item
-            label="上传身份证头像面照片:"
-            name="4"
-            rules={[{ required: true, message: "请上传身份证照片面照片" }]}
-          >
-            <div>
-              <Upload
-                name="avatar1"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-              >
-                {imageUrl != null ? (
-                  <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-                ) : (
-                  uploadButton
-                )}
-              </Upload>
-
-              <div className=" text-[12px] text-[#999]">
-                <div>上传格式:jpg,jpeg,png,webp</div>
-                <div>最大限制2MB</div>
-              </div>
-            </div>
-          </Form.Item>
-
-          {/* 上传身份国徽面照片 */}
-          <Form.Item
-            label="上传身份国徽面照片:"
-            name="5"
-            rules={[{ required: true, message: "请上传省份证国徽面照片" }]}
-          >
-            <div>
-              <Upload
-                name="avatar2"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-              >
-                {imageUrl != null ? (
-                  <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-                ) : (
-                  uploadButton
-                )}
-              </Upload>
-              <div className=" text-[12px] text-[#999]">
-                <div>上传格式:jpg,jpeg,png,webp</div>
-                <div>最大限制2MB</div>
-              </div>
-            </div>
-          </Form.Item>
-
-          {/* 状态 */}
-          <Form.Item label="状态:" name="status">
-            <div>
-              <Radio.Group
-                name="radiogroup"
-                defaultValue={1}
-                className=" py-[10px]"
-              >
-                <Radio value={1} className=" mr-[14px]">
-                  通过审核
-                </Radio>
-                <Radio value={0}>待审核</Radio>
-              </Radio.Group>
-            </div>
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className=" h-[40px] bg-[#955ce6] mb-[40px]"
-            >
-              提交保存
-            </Button>
-          </Form.Item>
-        </Form>
+            <a href="">
+              <RightOutline
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  margin: "0 auto ",
+                  marginTop: "12px",
+                  color: "#c8c4c4"
+                }}
+              />
+            </a>
+          </li>
+        </ul>
       </div>
-    </div>
+    </>
   );
 };
 
