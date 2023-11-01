@@ -322,7 +322,7 @@ const layout: FC = () => {
                 items={items}
               />
             </Sider>
-            <Content style={contentStyle}>
+            <Content style={contentStyle} className=" overflow-y-auto">
               <Outlet></Outlet>
             </Content>
           </Layout>

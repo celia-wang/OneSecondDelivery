@@ -32,6 +32,148 @@ namespace Res {
       }[];
     };
   };
+  //用户列表
+  type TOders = {
+    key: React.Key;
+    name: string;
+    age: number;
+    address: string;
+    orderNo: string;
+    nickName: string;
+    avatarUrl: string;
+    mobileNumber: string;
+    payAmount: number;
+    timePrice: number;
+    startPrice: number;
+    distancePrice: number;
+    weightPrice: number;
+    fee: number | string;
+    status: number;
+    goodsDesc: string;
+    startAddress: TstartAddress;
+    endAddress: TendAddress;
+    createTime: string;
+    updateTime: string;
+    defaultPwd: string;
+    updatedBy: string;
+    refundAmount: number;
+    refundStatus: number;
+  };
+  type TstartAddress = {
+    addressDetail: string;
+    city: string;
+    contactName: string;
+    mobileNumber: string;
+    district: string;
+    province: string;
+    streetNumber: string;
+  };
+
+  type TendAddress = {
+    addressDetail: string;
+    city: string;
+    contactName: string;
+    district: string;
+    mobileNumber: string;
+    province: string;
+  };
+
+  //
+  type TAdminConfigOrderCancel = {
+    code: number;
+    msg: string;
+    data: {
+      userCancelTips: [string, string, object];
+      adminCancelTips: string[];
+      agentCancelTips: string[];
+      riderCancelTips: string[];
+      userCancelRules: { price: number; timeRange: number[] }[];
+      riderCancelRules: { price: number; timeRange: number[] }[];
+    };
+  };
+
+  type TTipOptionsConfiguration = {
+    code: number;
+    msg: string;
+    data: { feeTips: number[]; agentExtract: number; platformExtract: number };
+  };
+
+  //骑手列表
+  type TRiderList2 = {
+    id: number;
+    createTime: string;
+    updateTime: string;
+    riderNo: string;
+    status: number;
+    userNo: string;
+    startReceive: number;
+    cityNo: string;
+    realname: string;
+    mobileNumber: string;
+    avatarUrl: string;
+    nickName: string;
+  };
+  type TRiderList = {
+    code: number;
+    msg: string;
+    data: {
+      pageSize: number;
+      current: number;
+      count: number;
+      totalPages: number;
+      data: {
+        id: number;
+        createTime: string;
+        updateTime: string;
+        riderNo: string;
+        status: number;
+        userNo: string;
+        startReceive: number;
+        cityNo: string;
+        realname: string;
+        mobileNumber: string;
+        avatarUrl: string;
+        nickName: string;
+      }[];
+    };
+  };
+
+  type TRiderAuditList2 = {
+    id: number;
+    createTime: string;
+    updateTime: string;
+    realname: string;
+    idCardNo: string;
+    avatarFaceImage: string;
+    nationalFaceImage: string;
+    status: number;
+    refuseReason: string;
+    userNo: string;
+    cityNo: string;
+  };
+  type TRiderAuditList = {
+    code: number;
+    msg: string;
+    data: {
+      pageSize: number;
+      current: number;
+      count: number;
+      totalPages: number;
+      data: {
+        id: number;
+        createTime: string;
+        updateTime: string;
+        realname: string;
+        idCardNo: string;
+        avatarFaceImage: string;
+        nationalFaceImage: string;
+        status: number;
+        refuseReason: string;
+        userNo: string;
+        cityNo: string;
+      }[];
+    };
+  };
 
   type ValuationList = {
     code: number;

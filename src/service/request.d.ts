@@ -9,6 +9,15 @@ namespace Req {
     current: number;
     pageSize: number;
   };
+  type TOrderList = {
+    current: number;
+    pageSize: number;
+    mobileNumber?: number;
+    orderNo?: string;
+    riderNo?: string;
+    status?: number;
+    userNo?: string;
+  };
   type Valuation = {
     ruleName: string;
     current: number;
