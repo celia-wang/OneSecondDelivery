@@ -9,7 +9,74 @@ export const postAdminLogin = async (data: Req.AdminLogin) =>
   await request.post("/api/admin/login", data);
 
 export const adminAgent = async (params: Req.AdminAgent) =>
-  await request.get<Res.AgentList>("api/admin/agent/list", { params });
+  await request.get<Res.AgentList>("/admin/agent/list", { params });
+
+// 订单列表
+export const getOrderList = async (params: Req.TOrderList) =>
+  await request.get("/api/admin/order/list", { params });
+
+// 资金走向列表
+export const getFundsFlowList = async (params: {
+  current: number;
+  pageSize: number;
+}) =>
+  (await request.get("/api/admin/order/capitaltrend/list", { params })).data;
+
+// 取消订单配置
+export const getAdminConfigOrderCancel = async () =>
+  await request.get<Res.TAdminConfigOrderCancel>(
+    "/api/admin/config/ordercancel"
+  );
+
+// 设置取消订单配置
+export const ChangeAdminConfigOrderCancel = async (
+  data: Res.TAdminConfigOrderCancel
+) => await request.post<Res.VerifyCode>("/api/admin/config/ordercancel", data);
+
+// 小费选项配置
+export const getAdminConfigOrderFee = async () =>
+  await request.get<Res.TTipOptionsConfiguration>("/api/admin/config/orderfee");
+
+// 小费配置
+export const getTipOptionsConfiguration = async (
+  data: Res.TTipOptionsConfiguration
+) => await request.post<Res.VerifyCode>("/api/admin/config/orderfee", data);
+
+// 骑手管理开始++++——————++++
+// 骑手列表http://192.168.145.28:8888/admin/rider/list?current=1&pageSize=20
+export const getRiderList = async (params: Req.TOrderList) =>
+  await request.get<Res.TRiderList>("/api/admin/rider/list", { params });
+
+export const getRiderAuditList = async (params: Req.TOrderList) =>
+  (
+    await request.get<Res.TRiderAuditList>("/api/admin/rider/register/list", {
+      params
+    })
+  ).data;
+
+// 是否开启接单http://192.168.145.28:8888/admin/rider/receive/status
+export const getAdminRiderReceiveStatus = async (params: {
+  startReceive: boolean;
+  riderNo: string;
+}) => await request.put("/api/admin/rider/receive/status", params);
+
+// 是否禁用启用http://192.168.145.28:8888/admin/user/status
+export const getAdminUserStatus = async (params: {
+  status: string;
+  userNo: string;
+}) => await request.put("/api/admin/user/status", params);
+
+// 通过审批 http://192.168.145.28:8888/admin/rider/pass
+export const getAdminRiderPass = async (params: { userNo: string }) =>
+  await request.put("/api/admin/rider/pass", params);
+
+// 拒绝审批 http://192.168.145.28:8888/admin/rider/refuse
+// 骑手管理结束++++——————++++
+export const getAdminRideRefuse = async (params: {
+  refuseReason: string;
+  userNo: string;
+}) => await request.put("/api/admin/rider/refuse", params);
+// await request.get<Res.AgentList>("api/admin/agent/list", { params });
 // 计价表单
 export const getValuation = async (params: Req.Valuation) =>
   await request.get<Res.ValuationList>(
