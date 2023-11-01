@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import { type FC } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { getTagAdd } from "../../../../service/api";
 
 const Div = styled.div`
   input {
@@ -57,9 +59,13 @@ const Div = styled.div`
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
   }
 `;
-
-const onFinish = (values: any) => {
-  console.log("Success:", values);
+// 提交
+const onFinish = (values: Req.TagAddData) => {
+  getTagAdd(values)
+    .then(() => {
+      void message.success("添加成功");
+    })
+    .catch(() => message.error("添加失败"));
 };
 const onFinishFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
@@ -88,10 +94,10 @@ const Tadd: FC = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item label="物品标签组名称:">
+          <Form.Item label="物品标签组名称:" name="groupName">
             <Input placeholder="请输入物品标签组名称" />
           </Form.Item>
-          <Form.Item name="note" label="标签" rules={[{ required: true }]}>
+          <Form.Item name="tags" label="标签" rules={[{ required: true }]}>
             <Select className="h-[40px] w-[500px]" mode="tags" />
           </Form.Item>
           <Form.Item>

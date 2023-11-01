@@ -34,7 +34,7 @@ namespace Req {
     pageSize: number;
   };
   type Tag = {
-    groupName: string;
+    groupName?: string | undefined | null;
     current: number;
     pageSize: number;
   };
@@ -533,4 +533,6 @@ namespace Req {
       ];
     };
   };
+  //运营-物品标签组 add
+  type TagAddData = { groupName: string; tags: string[] };
 }
