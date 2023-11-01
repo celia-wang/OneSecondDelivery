@@ -38,6 +38,7 @@ import Users from "./views/user/users";
 import AgreementRider from "./views/config/agreementRider";
 import Agentupdata from "./views/user/edit/agentsupdata";
 import Adminupdata from "./views/user/edit/adminupdata";
+import RiderEditAdd from "./views/rider/RiderEditAdd";
 
 const App: FC = () => {
   return (
@@ -70,6 +71,7 @@ const App: FC = () => {
             <Route path="/order/feeset" element={<Feeset />} />
             <Route path="/rider/riders" element={<Riders />} />
             <Route path="/rider/registers" element={<Registers />} />
+            <Route path="/rider/edit/add" element={<RiderEditAdd />} />
             <Route path="/rider/cash" element={<RiderCash />} />
             <Route path="/city/citys" element={<Citys />} />
             <Route path="/city/valuation/valuations" element={<Valuations />} />
