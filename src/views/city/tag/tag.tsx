@@ -1,13 +1,15 @@
 /* eslint-disable no-console */
-import { type FC, useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { type FC, useState, useEffect } from "react";
 import { useRequest } from "ahooks";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
-import type { MenuProps } from "antd";
-import { Button, Input, Table, Dropdown, Popover } from "antd";
+// import type { MenuProps } from "antd";
+import { Button, Input, Table, Dropdown, Popover, message, Form } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useNavigate } from "react-router-dom";
-import { getTag } from "@/service/api";
+import { getTag, getTagDel } from "@/service/api";
+import { useForm } from "antd/es/form/Form";
 
 const Div = styled.div`
   .search-item {
@@ -41,30 +43,33 @@ const Div = styled.div`
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
   }
 `;
-
 interface DataType {
   groupName: string;
   tag: string;
   time: React.ReactElement;
+  id: number;
 }
-
-const onMenuClick: MenuProps["onClick"] = (e) => {
-  console.log("click", e);
-};
 const items = [
   {
     key: "1",
-    label: "修改"
+    label: " 修改"
   },
   {
     key: "2",
     label: "删除"
   }
 ];
-
 const Tag: FC = () => {
-  const { data } = useRequest(getTag);
-
+  const [form] = useForm();
+  const [currents, setCurrent] = useState<number>(1);
+  const [groupName, setGroupName] = useState<string | null | undefined>(null);
+  useEffect(() => {
+    refresh();
+  }, [groupName]);
+  const { data, refresh } = useRequest(
+    async () => await getTag({ pageSize: 20, current: currents, groupName })
+  );
+  // 表头
   const columns: ColumnsType<DataType> = [
     {
       title: "标签组名称",
@@ -84,9 +89,18 @@ const Tag: FC = () => {
     {
       title: "操作",
       key: "action",
+      dataIndex: "id",
       render: (_, record) => (
-        <Dropdown.Button menu={{ items, onClick: onMenuClick }}>
-          <Popover title="操作人">
+        <Dropdown.Button
+          menu={{
+            items,
+            onClick: (ev) => {
+              onMenuClick(ev, record.id);
+            }
+          }}
+          // style={{ flex: "flex", justifyContent: "center" }}
+        >
+          <Popover>
             <Icon
               icon="clarity:administrator-solid"
               className="text-[#955ce6]"
@@ -97,9 +111,11 @@ const Tag: FC = () => {
     }
   ];
 
+  // 数据
   const TagList: DataType[] = [];
-  data?.data.data.data.forEach((tlist) => {
+  data?.data.data.data.forEach((tlist: any) => {
     TagList.push({
+      id: tlist?.id,
       groupName: `${tlist?.groupName}`,
       tag: `${tlist?.tags[0]}`,
       time: (
@@ -110,7 +126,6 @@ const Tag: FC = () => {
       )
     });
   });
-
   const [loadings, setLoadings] = useState<boolean[]>([]);
   const enterLoading = (index: number) => {
     setLoadings((prevLoadings) => {
@@ -137,38 +152,65 @@ const Tag: FC = () => {
     selectedRowKeys,
     onChange: onSelectChange
   };
+  // 修改删除
+  const onMenuClick = (e: any, id: number) => {
+    if (e.key === "1") {
+      console.log("修改");
+    } else if (e.key === "2") {
+      console.log("删除");
+      getTagDel({ id })
+        .then(async () => {
+          refresh();
+          await message.success("删除成功");
+        })
+        .catch(async () => await message.error("删除失败"));
+    }
+  };
+  // 搜索
+  const onFinish = (vul: { groupName: string }) => {
+    console.log(vul.groupName);
+    setGroupName(vul.groupName);
+    refresh();
+  };
+  // 重置
+  const onReset = () => {
+    form.resetFields();
+  };
   const nav = useNavigate();
   return (
     <Div className="h-[100%] overflow-auto">
       <div className="home-page-title font-[500] text-[24px]">
         物品标签组列表
       </div>
-      <div className=" mt-[20px]">
-        <div className="flex justify-start flex-wrap">
-          <div className="search-item">
-            <Input placeholder="标签组名称" className=" h-[40px] " />
-          </div>
-        </div>
-        <div className=" mt-[12px]">
-          <Button className="w-[120px] h-[40px] mr-[5px]">取消</Button>
-          <Button type="primary" className="w-[120px] h-[40px]">
+      <Form name="basic" onFinish={onFinish} autoComplete="off" form={form}>
+        <Form.Item name="groupName">
+          <Input
+            placeholder="规则名称"
+            className="w-[200px] mt-[20px] h-[40px]"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button className="w-[120px] h-[40px] mr-[5px]" onClick={onReset}>
+            取消
+          </Button>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="w-[120px] h-[40px] "
+          >
             搜索
           </Button>
-        </div>
-        <div
-          role="separator"
-          className="ant-divider ant-divider-horizontal"
-        ></div>
-      </div>
+        </Form.Item>
+      </Form>
       <div className="flex justify-between item-center">
         <Button
           type="primary"
-          className=" h-[40px]"
+          className="h-[40px]"
           onClick={() => {
             nav("/city/tag/enit/add");
           }}
         >
-          添加物品标签组
+          添加计价规则
         </Button>
         <Button
           icon={<Icon icon="iconoir:refresh" />}
@@ -184,11 +226,15 @@ const Tag: FC = () => {
           rowSelection={rowSelection}
           columns={columns}
           dataSource={TagList}
+          rowKey="userNo"
           pagination={{
             showQuickJumper: true,
             pageSize: 20,
             showSizeChanger: false,
-            showTotal: (total) => `共 ${total} 条数据`
+            showTotal: (total) => `共 ${total} 条数据`,
+            onChange: (page) => {
+              setCurrent(page);
+            }
           }}
         />
       </div>

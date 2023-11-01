@@ -105,13 +105,13 @@ export const getWeight = async (params: Req.Weight) =>
 
 // 物品标签组
 export const getTag = async (params: Req.Tag) =>
-  await request.get<Res.TagList>(
-    "/api/admin/citys/tag/list?current=1&pageSize=20",
-    {
-      params
-    }
-  );
-
+  await request.get<Res.TagList>("/api/admin/citys/tag/list", {
+    params
+  });
+export const getTagAdd = async (params: Req.TagAddData) =>
+  await request.post("/api/admin/citys/tag/add", params);
+export const getTagDel = async (data: object) =>
+  await request.delete("/api/admin/citys/tag/del", { data });
 /**
  * wsx
  * 系统设置
@@ -225,14 +225,14 @@ export const broker = async (data: any) =>
 // 代理启用禁用
 export const updateUserInfo = async (agentNo: string, status: number) =>
   await request.put("/api/admin/agent/status", {
-    agentNo: agentNo,
-    status: status
+    agentNo,
+    status
   });
 
 // 代理重置密码
 export const ResetPassword = async (agentNo: string) =>
   await request.put<Res.ResetPassword>("/api/admin/agent/resetpwd", {
-    agentNo: agentNo
+    agentNo
   });
 
 // 修改代理信息
@@ -252,14 +252,14 @@ export const ListAdministrators = async (data: {
 // 启用禁用
 export const updateAdmin = async (adminNo: string, status: number) =>
   await request.put("/api/admin/status", {
-    adminNo: adminNo,
-    status: status
+    adminNo,
+    status
   });
 
 // 管理重置密码
 export const AdminPassword = async (adminNo: string) =>
   await request.put<Res.ResetPassword>("/api/admin/resetpwd", {
-    adminNo: adminNo
+    adminNo
   });
 
 // 用户列表
@@ -271,8 +271,8 @@ export const ListUsers = async (data: { current: number; pageSize: number }) =>
 // 用户启用禁用
 export const updateUsers = async (userNo: string, status: number) =>
   await request.put("/api/admin/user/status", {
-    userNo: userNo,
-    status: status
+    userNo,
+    status
   });
 
 // 添加代理
