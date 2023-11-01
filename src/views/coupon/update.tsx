@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { Button, Form, Input, InputNumber, Radio, Select } from "antd";
 import { type FC } from "react";
 
-const Add: FC = () => {
+const update: FC = () => {
   const [form] = Form.useForm();
   const onFinish = (values: { couponName?: string }) => {
     // eslint-disable-next-line no-console
@@ -151,4 +151,4 @@ const Add: FC = () => {
   );
 };
 
-export default Add;
+export default update;
