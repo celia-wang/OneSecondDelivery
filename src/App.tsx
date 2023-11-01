@@ -38,7 +38,7 @@ import Users from "./views/user/users";
 import AgreementRider from "./views/config/agreementRider";
 import Agentupdata from "./views/user/edit/agentsupdata";
 import Adminupdata from "./views/user/edit/adminupdata";
-import RiderEditAdd from "./views/rider/RiderEditAdd";
+import RiderEditAdd from "./views/rider/RidereditAdd";
 
 const App: FC = () => {
   return (
