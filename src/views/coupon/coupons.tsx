@@ -133,6 +133,7 @@ const Coupons: FC = () => {
   const [seek, setSeek] = useState({});
   // 请求并拿到数据  refresh修改数据刷新
   const [currentID, setCurrentID] = useState(1);
+  const [messageApi, contextHolder] = message.useMessage();
   const { data: adminCouponListData, refresh } = useRequest(
     async () =>
       await adminCouponList({ current: currentID, pageSize: 20, ...seek })
@@ -140,13 +141,23 @@ const Coupons: FC = () => {
 
   useEffect(() => {
     refresh();
-  }, [refresh, seek]);
+  }, [refresh, currentID, seek]);
 
+  const success = () => {
+    void messageApi.open({
+      type: "success",
+      content: "修改状态成功"
+    });
+  };
+  const error = () => {
+    void messageApi.open({
+      type: "error",
+      content: "修改状态失败"
+    });
+  };
   // 禁用启用功能
   const disableEnableFn = (couponNo: string, status: string) => {
-    adminCouponStatus({ couponNo, status })
-      .then((res) => message.success(res.data.msg))
-      .catch(() => message.error("修改状态失败"));
+    adminCouponStatus({ couponNo, status }).then(success).catch(error);
     refresh();
   };
 
@@ -253,6 +264,7 @@ const Coupons: FC = () => {
         height: "calc(100vh - 60px - 60px)"
       }}
     >
+      {contextHolder}
       <h1 className="text-[24px] font-[500] mt-0">优惠券列表</h1>
       <Form form={form} onFinish={onFinish}>
         <div className=" flex flex-wrap">
@@ -362,12 +374,11 @@ const Coupons: FC = () => {
           dataSource={dataPoop}
           bordered
           pagination={{
-            showSizeChanger: true,
-            showQuickJumper: true, // 快速跳转至某页
-            defaultPageSize: 20,
+            pageSize: 20,
+            showSizeChanger: false,
+            showQuickJumper: true,
             total: adminCouponListData?.data.data?.count, // 页数
-            showTotal: (total) => `共 ${total} 条数据`,
-            showPrevNextJumpers: true
+            showTotal: (total) => `共 ${total} 条数据`
           }}
           onChange={(page) => {
             setCurrentID(page.current!);
