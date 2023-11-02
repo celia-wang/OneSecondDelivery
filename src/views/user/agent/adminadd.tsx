@@ -3,7 +3,6 @@ import { Icon } from "@iconify/react";
 import { NavLink } from "react-router-dom";
 import { Button, Form, Input, message } from "antd";
 import { AddAdmin } from "@/service/api";
-
 const adminadd: FC = () => {
   // 收集数据
   const onFinish = (values: FieldType) => {

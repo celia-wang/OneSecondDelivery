@@ -3,7 +3,6 @@ import { Icon } from "@iconify/react";
 import { NavLink } from "react-router-dom";
 import { Button, Radio, Form, Input, message } from "antd";
 import { Addproxies } from "@/service/api";
-
 const agentadd: FC = () => {
   // 收集数据
   const onFinish = (values: FieldType) => {
