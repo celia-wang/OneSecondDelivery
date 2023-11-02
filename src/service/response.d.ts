@@ -210,41 +210,6 @@ namespace Res {
     };
   };
 
-  type ValFountList = {
-    code: number;
-    msg: string;
-    data: {
-      pageSize: number;
-      current: number;
-      count: number;
-      totalPages: number;
-      data: {
-        id: number;
-        createTime: string;
-        updateTime: string;
-        isDelete: number;
-        ruleName: string;
-        ruleContext: {
-          time: { gt: number; lte: number; price: number }[];
-          weight: {
-            gt: number;
-            lte: number;
-            price: number;
-            unitWeight: number;
-          }[];
-          distance: {
-            gt: number;
-            lte: number;
-            price: number;
-            unitDistance: number;
-          }[];
-        };
-        createdBy: string;
-        updatedBy: string;
-      }[];
-    };
-  };
-
   type WeightList = {
     code: number;
     msg: string;

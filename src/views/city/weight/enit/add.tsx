@@ -81,13 +81,7 @@ const Wadd: FC = () => {
             navigate(-1);
           }}
         >
-          <Icon
-            icon="solar:arrow-left-outline"
-            className=" text-[20px]"
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
+          <Icon icon="solar:arrow-left-outline" className=" text-[20px]" />
         </div>
         <span className="add-header-title">新增重量标签</span>
       </div>

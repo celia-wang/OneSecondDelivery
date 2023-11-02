@@ -65,11 +65,14 @@ const Div = styled.div`
   }
 `;
 
-const onFinish = (values: any) => {
-  console.log("Success:", values);
-};
-const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
+const onFinish = (values: Req.AddVal) => {
+  console.log({ ...values });
+
+  // addValuation(values)
+  //   .then(() => {
+  //     void message.success("添加成功");
+  //   })
+  //   .catch(() => message.error("添加失败"));
 };
 const format = "HH:mm";
 
@@ -84,13 +87,7 @@ const vAdd: FC = () => {
             navigate(-1);
           }}
         >
-          <Icon
-            icon="solar:arrow-left-outline"
-            className=" text-[20px]"
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
+          <Icon icon="solar:arrow-left-outline" className=" text-[20px]" />
         </div>
         <span className="add-header-title">新增计价规则</span>
       </div>
@@ -100,64 +97,69 @@ const vAdd: FC = () => {
           style={{ maxWidth: 600 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
           <Form.Item
             label="规则名称"
-            name="rulename"
+            name="ruleName"
             rules={[{ required: true, message: "请输入规则名称" }]}
           >
             <Input placeholder="请输入规则名称" />
           </Form.Item>
-          <Form.Item
-            label="距离规则"
-            name="distanceRule"
-            rules={[{ required: true }]}
-          >
-            <Form.List name="distanceRule">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: "flex", marginBottom: 8 }}
-                      align="baseline"
-                    >
-                      <Form.Item label="范围(km):">
-                        <InputNumber defaultValue={1} />~
-                        <InputNumber defaultValue={3} />
-                      </Form.Item>
-                      <Form.Item label="距离单位(km):">
-                        <InputNumber defaultValue={1} />
-                      </Form.Item>
-                      <Form.Item label="价格(元):">
-                        <InputNumber defaultValue={1} />
-                      </Form.Item>
-                      <Form.Item>
+
+          <Form.Item name="ruleContext">
+            {/* 距离 */}
+            <Form.Item
+              label="距离规则"
+              name="distanceRule"
+              rules={[{ required: true }]}
+            >
+              <Form.List name="distanceRule">
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, ...restField }) => (
+                      <Space
+                        key={key}
+                        style={{ display: "flex", marginBottom: 8 }}
+                        align="baseline"
+                      >
+                        <Form.Item
+                          {...restField}
+                          name={[name, "dgt"]}
+                          label="范围(km):"
+                        >
+                          <InputNumber defaultValue={1} /> ~
+                          <InputNumber defaultValue={3} />
+                        </Form.Item>
+                        <Form.Item label="距离单位(km):" name={[name, "dunit"]}>
+                          <InputNumber defaultValue={1} />
+                        </Form.Item>
+                        <Form.Item label="价格(元):" name={[name, "dprice"]}>
+                          <InputNumber defaultValue={1} />
+                        </Form.Item>
                         <MinusCircleOutlined
                           onClick={() => {
                             remove(name);
                           }}
                         />
-                      </Form.Item>
-                    </Space>
-                  ))}
-                  <Form.Item>
-                    <Button
-                      className="h-[40px]"
-                      onClick={() => {
-                        add();
-                      }}
-                      block
-                      icon={<PlusOutlined />}
-                    >
-                      添加距离规则
-                    </Button>
-                  </Form.Item>
-                </>
-              )}
-            </Form.List>
+                      </Space>
+                    ))}
+                    <Form.Item>
+                      <Button
+                        className="h-[40px]"
+                        onClick={() => {
+                          add();
+                        }}
+                        block
+                        icon={<PlusOutlined />}
+                      >
+                        添加距离规则
+                      </Button>
+                    </Form.Item>
+                  </>
+                )}
+              </Form.List>
+            </Form.Item>
           </Form.Item>
           <Form.Item
             label="重量规则"
@@ -183,13 +185,11 @@ const vAdd: FC = () => {
                       <Form.Item label="价格(元):">
                         <InputNumber defaultValue={1} />
                       </Form.Item>
-                      <Form.Item>
-                        <MinusCircleOutlined
-                          onClick={() => {
-                            remove(name);
-                          }}
-                        />
-                      </Form.Item>
+                      <MinusCircleOutlined
+                        onClick={() => {
+                          remove(name);
+                        }}
+                      />
                     </Space>
                   ))}
                   <Form.Item>
@@ -238,13 +238,11 @@ const vAdd: FC = () => {
                       <Form.Item label="价格(元):">
                         <InputNumber defaultValue={1} />
                       </Form.Item>
-                      <Form.Item>
-                        <MinusCircleOutlined
-                          onClick={() => {
-                            remove(name);
-                          }}
-                        />
-                      </Form.Item>
+                      <MinusCircleOutlined
+                        onClick={() => {
+                          remove(name);
+                        }}
+                      />
                     </Space>
                   ))}
                   <Form.Item>

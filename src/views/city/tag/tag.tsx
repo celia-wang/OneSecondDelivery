@@ -70,6 +70,17 @@ const Tag: FC = () => {
     async () => await getTag({ pageSize: 20, current: currents, groupName })
   );
   // 表头
+  // 时间转换
+  const formatDate = (dateString: string) => {
+    const originalDate = new Date(dateString);
+    const year = originalDate.getFullYear();
+    const month = (originalDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = originalDate.getDate().toString().padStart(2, "0");
+    const hours = originalDate.getHours().toString().padStart(2, "0");
+    const minutes = originalDate.getMinutes().toString().padStart(2, "0");
+    return `${year}/${month}/${day} ${hours}:${minutes}`;
+  };
+
   const columns: ColumnsType<DataType> = [
     {
       title: "标签组名称",
@@ -120,8 +131,12 @@ const Tag: FC = () => {
       tag: `${tlist?.tags[0]}`,
       time: (
         <div>
-          <div className=" text-[12px]">创建:{tlist?.createTime}</div>
-          <div className=" text-[12px]">更新:{tlist?.updateTime}</div>
+          <div className=" text-[12px]">
+            创建:{formatDate(tlist?.createTime)}
+          </div>
+          <div className=" text-[12px]">
+            更新:{formatDate(tlist?.updateTime)}
+          </div>
         </div>
       )
     });
@@ -175,6 +190,8 @@ const Tag: FC = () => {
   // 重置
   const onReset = () => {
     form.resetFields();
+    setGroupName(null);
+    refresh();
   };
   const nav = useNavigate();
   return (

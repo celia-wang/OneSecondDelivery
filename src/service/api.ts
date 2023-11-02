@@ -79,20 +79,17 @@ export const getAdminRideRefuse = async (params: {
 // await request.get<Res.AgentList>("api/admin/agent/list", { params });
 // 计价表单
 export const getValuation = async (params: Req.Valuation) =>
-  await request.get<Res.ValuationList>(
-    "/api/admin/citys/valuation/list?current=1&pageSize=20",
-    {
-      params
-    }
-  );
+  await request.get<Res.ValuationList>("/api/admin/citys/valuation/list", {
+    params
+  });
 
-export const getValFount = async (params: Req.Valuation) =>
-  await request.get<Res.ValFountList>(
-    "/api/admin/citys/valuation/list?current=1&pageSize=20&ruleName=",
-    {
-      params
-    }
-  );
+// 计价删除
+export const delValuation = async (data: Req.DelVal) =>
+  await request.delete("/api/admin/citys/valuation/del", { data });
+
+// 计价新增
+export const addValuation = async (data: Req.AddVal) =>
+  await request.post("/api/admin/citys/valuation/add", data);
 
 // 重量标签
 export const getWeight = async (params: Req.Weight) =>
