@@ -107,59 +107,53 @@ const vAdd: FC = () => {
             <Input placeholder="请输入规则名称" />
           </Form.Item>
 
-          <Form.Item name="ruleContext">
-            {/* 距离 */}
-            <Form.Item
-              label="距离规则"
-              name="distanceRule"
-              rules={[{ required: true }]}
-            >
-              <Form.List name="distanceRule">
-                {(fields, { add, remove }) => (
-                  <>
-                    {fields.map(({ key, name, ...restField }) => (
-                      <Space
-                        key={key}
-                        style={{ display: "flex", marginBottom: 8 }}
-                        align="baseline"
-                      >
-                        <Form.Item
-                          {...restField}
-                          name={[name, "dgt"]}
-                          label="范围(km):"
-                        >
-                          <InputNumber defaultValue={1} /> ~
-                          <InputNumber defaultValue={3} />
-                        </Form.Item>
-                        <Form.Item label="距离单位(km):" name={[name, "dunit"]}>
-                          <InputNumber defaultValue={1} />
-                        </Form.Item>
-                        <Form.Item label="价格(元):" name={[name, "dprice"]}>
-                          <InputNumber defaultValue={1} />
-                        </Form.Item>
-                        <MinusCircleOutlined
-                          onClick={() => {
-                            remove(name);
-                          }}
-                        />
-                      </Space>
-                    ))}
-                    <Form.Item>
-                      <Button
-                        className="h-[40px]"
+          {/* 距离 */}
+          <Form.Item
+            label="距离规则"
+            name="distanceRule"
+            rules={[{ required: true }]}
+          >
+            <Form.List name="distanceRule">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ display: "flex", marginBottom: 8 }}
+                      align="baseline"
+                    >
+                      <Form.Item name={[name, "gt"]} label="范围(km):">
+                        <InputNumber defaultValue={1} /> ~
+                        <InputNumber defaultValue={3} />
+                      </Form.Item>
+                      <Form.Item label="距离单位(km):" name={[name, "dunit"]}>
+                        <InputNumber defaultValue={1} />
+                      </Form.Item>
+                      <Form.Item label="价格(元):" name={[name, "dprice"]}>
+                        <InputNumber defaultValue={1} />
+                      </Form.Item>
+                      <MinusCircleOutlined
                         onClick={() => {
-                          add();
+                          remove(name);
                         }}
-                        block
-                        icon={<PlusOutlined />}
-                      >
-                        添加距离规则
-                      </Button>
-                    </Form.Item>
-                  </>
-                )}
-              </Form.List>
-            </Form.Item>
+                      />
+                    </Space>
+                  ))}
+                  <Form.Item>
+                    <Button
+                      className="h-[40px]"
+                      onClick={() => {
+                        add();
+                      }}
+                      block
+                      icon={<PlusOutlined />}
+                    >
+                      添加距离规则
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
           </Form.Item>
           <Form.Item
             label="重量规则"

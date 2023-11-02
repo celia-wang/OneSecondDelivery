@@ -47,8 +47,8 @@ interface DataType {
   key: React.Key;
   id: number;
   ruleName: string;
-  distanceRule: string;
-  weightRule: string;
+  distanceRule: string[];
+  weightRule: string[];
   timeRule: React.ReactElement | string;
   time: React.ReactElement;
 }
@@ -85,7 +85,7 @@ const Valuations: FC = () => {
     const minutes = originalDate.getMinutes().toString().padStart(2, "0");
     return `${year}/${month}/${day} ${hours}:${minutes}`;
   };
-  const Hours = (dateNumber: number) => {
+  const Hours = (dateNumber: number): string => {
     const h = 8;
     const originalDate = new Date(dateNumber);
     const hours =
@@ -113,16 +113,22 @@ const Valuations: FC = () => {
       key: index,
       id: vlist.id,
       ruleName: vlist.ruleName,
-      distanceRule: `${
-        vlist?.ruleContext?.distance[0]?.gt !== undefined
-          ? `在${vlist?.ruleContext?.distance[0]?.gt}~${vlist?.ruleContext?.distance[0]?.lte}公里范围内,每${vlist?.ruleContext?.distance[0]?.unitDistance}公里加价${vlist?.ruleContext?.distance[0]?.price}元`
-          : ""
-      }`,
-      weightRule: `${
-        vlist?.ruleContext?.weight[0]?.lte !== undefined
-          ? `在${vlist?.ruleContext?.weight[0]?.gt}~${vlist?.ruleContext?.weight[0]?.lte}公斤范围内，每${vlist?.ruleContext?.weight[0]?.unitWeight}公斤加价${vlist?.ruleContext?.weight[0]?.price}元`
-          : ""
-      }`,
+      distanceRule: vlist?.ruleContext?.distance.map(
+        () =>
+          `${
+            vlist?.ruleContext?.distance[0]?.gt !== undefined
+              ? `在${vlist?.ruleContext?.distance[0]?.gt}~${vlist?.ruleContext?.distance[0]?.lte}公里范围内,每${vlist?.ruleContext?.distance[0]?.unitDistance}公里加价${vlist?.ruleContext?.distance[0]?.price}元`
+              : ""
+          }`
+      ),
+      weightRule: vlist?.ruleContext?.weight.map(
+        () =>
+          `${
+            vlist?.ruleContext?.weight[0]?.lte !== undefined
+              ? `在${vlist?.ruleContext?.weight[0]?.gt}~${vlist?.ruleContext?.weight[0]?.lte}公斤范围内，每${vlist?.ruleContext?.weight[0]?.unitWeight}公斤加价${vlist?.ruleContext?.weight[0]?.price}元`
+              : ""
+          }`
+      ),
       timeRule:
         vlist?.ruleContext?.time[0] !== undefined ? (
           <div>
