@@ -1,32 +1,47 @@
 // import { adminCouponUpdate } from "@/service/api";
 import { Icon } from "@iconify/react";
 // import { useRequest } from "ahooks";
-import { Button, Form, Input, InputNumber, Radio, Select } from "antd";
+import { Button, Form, Input, InputNumber, Radio, Select, message } from "antd";
 import { type FC } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { ModifyVoucher } from "@/service/api";
 
 const update: FC = () => {
+  const Navigte = useNavigate();
   const [form] = Form.useForm();
-  const onFinish = (values: { couponName?: string }) => {
-    // eslint-disable-next-line no-console
-    console.log(values);
+  const { id } = useParams();
+  const valuedata = new URLSearchParams(id); // 解析字符串
+  // eslint-disable-next-line no-console
+  console.log(valuedata);
+  const UrlObj = Object.fromEntries(valuedata.entries()); // 将字符串转换成对象
+  // eslint-disable-next-line no-console
+  console.log(UrlObj);
+  const onFinish = (values: {
+    conditionService: string;
+    conditionsAmount: number;
+    couponName: string;
+    couponNo: string;
+    deadlineDays: string;
+    discountAmount: number;
+    limitNumber: number;
+    status: number;
+  }) => {
+    values.couponNo = UrlObj.couponNo;
+    ModifyVoucher(values)
+      .then(async (res: any) => {
+        if (res.data.code === 200) {
+          await message.success(res.data.msg);
+          Navigte(-1);
+        } else {
+          await message.error(res.data.msg);
+        }
+      })
+      .catch(() => {});
   };
-  // const onRunAdminCouponAdd = (res: { data: { code: number } }) => {
-  //   if (res.data.code === 200) {
-  //     void message.success({ content: "修改优惠券成功" });
-  //     form.resetFields(); // 清空表单数据
-  //   }
-  // };
-  // const { run } = useRequest(
-  //   async (values) => await adminCouponUpdate({ ...values }),
-  //   {
-  //     manual: true,
-  //     onSuccess: onRunAdminCouponAdd
-  //   }
-  // );
 
   return (
     <div
-      className="text-[#333] overflow-auto"
+      className="text-[#333]"
       style={{
         height: "calc(100vh - 60px - 60px)"
       }}
@@ -49,15 +64,7 @@ const update: FC = () => {
           onFinish={onFinish}
           style={{ maxWidth: 500 }}
           layout="vertical"
-          initialValues={{
-            couponName: "",
-            conditionsAmount: 0,
-            discountAmount: 0,
-            conditionService: "ALL",
-            deadlineDays: -1,
-            limitNumber: -1,
-            status: 1
-          }}
+          initialValues={UrlObj}
         >
           <Form.Item
             label="优惠券名称:"

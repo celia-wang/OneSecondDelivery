@@ -39,6 +39,8 @@ import AgreementRider from "./views/config/agreementRider";
 import Agentupdata from "./views/user/edit/agentsupdata";
 import Adminupdata from "./views/user/edit/adminupdata";
 import RiderEditAdd from "./views/rider/RidereditAdd";
+import Pwd from "./views/user/Pwd";
+import Update from "./views/user/updata";
 
 const App: FC = () => {
   return (
@@ -55,6 +57,8 @@ const App: FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/user/pwd" element={<Pwd />} />
+            <Route path="/user/update" element={<Update />} />
             <Route path="/user/agent/agents" element={<Agents />} />
             <Route path="/user/agent/edit/add" element={<AgentsAdd />} />
             <Route path="/user/edit/add" element={<AdminAdd />} />
@@ -83,7 +87,7 @@ const App: FC = () => {
             <Route path="/coupon/coupons" element={<Coupons />} />
             <Route path="/coupon/setting" element={<Setting />} />
             <Route path="/coupon/coupons/add" element={<CopAdd />} />
-            <Route path="/coupon/coupons/update" element={<CopUpdate />} />
+            <Route path="/coupon/coupons/update/:id" element={<CopUpdate />} />
             <Route path="/config/cash" element={<Cash />} />
             <Route path="/config/app" element={<Apps />} />
             <Route path="/config/share" element={<Share />} />

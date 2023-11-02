@@ -22,7 +22,7 @@ const Add: FC = () => {
 
   return (
     <div
-      className="text-[#333] overflow-auto"
+      className="text-[#333]"
       style={{
         height: "calc(100vh - 60px - 60px)"
       }}

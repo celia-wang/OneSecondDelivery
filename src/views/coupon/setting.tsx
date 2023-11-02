@@ -1,10 +1,20 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-confusing-void-expression */
 import { type FC } from "react";
-import { Button, Divider, Form, InputNumber, Radio, Select, Space } from "antd";
+import {
+  Button,
+  Divider,
+  Form,
+  InputNumber,
+  Radio,
+  Select,
+  Space,
+  message
+} from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Icon } from "@iconify/react";
 import { useRequest } from "ahooks";
-import { adminCouponList } from "@/service/api";
+import { adminCouponList, postAdminConfigCoupon } from "@/service/api";
 
 interface OptType {
   value: string;
@@ -28,9 +38,18 @@ const Setting: FC = () => {
     });
   });
 
+  const onFinish = (values: any) => {
+    console.log(values);
+    postAdminConfigCoupon({ values })
+      .then(async () => {
+        await message.success({ content: "修改成功" });
+      })
+      .catch(() => {});
+  };
+
   return (
     <div
-      className="overflow-auto text-[#333]"
+      className="text-[#333]"
       style={{
         height: "calc(100vh - 60px - 60px)"
       }}
@@ -38,7 +57,7 @@ const Setting: FC = () => {
       <h2 className=" px-[24px] py-[16px] m-0">优惠券设置</h2>
       <Form
         name="form"
-        // onFinish={onFinish}
+        onFinish={onFinish}
         style={{ maxWidth: 600 }}
         autoComplete="off"
       >
@@ -52,7 +71,7 @@ const Setting: FC = () => {
           <div className=" mb-[24px]">
             <div className=" py-[14px]">是否开启此项功能：</div>
             <Radio.Group
-              name="radiogroup"
+              name="shareOpen"
               defaultValue={1}
               className=" py-[10px]"
             >
@@ -130,7 +149,7 @@ const Setting: FC = () => {
           <div className=" mb-[24px]">
             <div className=" py-[14px]">是否开启此项功能：</div>
             <Radio.Group
-              name="radiogroup"
+              name="newUserOpen"
               defaultValue={1}
               className=" py-[10px]"
             >

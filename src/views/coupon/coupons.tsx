@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 interface DataType {
   key: React.Key;
+  id: number;
   name: string; // 优惠券名称
   ranges: string[]; // 适用范围
   money: string; // 优惠金额
@@ -167,6 +168,7 @@ const Coupons: FC = () => {
   adminCouponListData?.data.data?.data?.forEach((item: any, index: number) => {
     dataPoop.push({
       key: `${index}`,
+      id: item.id,
       name: `${item.couponName}`,
       ranges: [`${item.conditionService}`],
       money: `${item.discountAmount}元`,
@@ -204,7 +206,12 @@ const Coupons: FC = () => {
                   key: "1",
                   label: "修改",
                   onClick: () => {
-                    navigate("/coupon/coupons/update");
+                    navigate(
+                      `/coupon/coupons/update/id=${item.id}&createTime=${item.createTime}
+                      &couponNo=${item.couponNo}&couponName=${item.couponName}&discountAmount=${item.discountAmount}
+                      &conditionsAmount=${item.conditionsAmount}&conditionService=${item.conditionService}
+                      &cumulativeUseNo=${item.cumulativeUseNo}&limitNumber=${item.limitNumber}&status=${item.status}&updatedBy=${item.updatedBy}`
+                    );
                   }
                 },
                 {
@@ -259,7 +266,7 @@ const Coupons: FC = () => {
   };
   return (
     <div
-      className="overflow-auto"
+      className=""
       style={{
         height: "calc(100vh - 60px - 60px)"
       }}
