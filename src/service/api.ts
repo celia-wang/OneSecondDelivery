@@ -294,3 +294,37 @@ export const updataAdmin = async (data: {
   realName: string;
   adminNo: string;
 }) => await request.put("/api/admin/update", data);
+
+// 修改优惠卷
+export const ModifyVoucher = async (data: {
+  conditionService: string;
+  conditionsAmount: number;
+  couponName: string;
+  couponNo: string;
+  deadlineDays: string;
+  discountAmount: number;
+  limitNumber: number;
+  status: number;
+}) => await request.put("/api/admin/coupon/update", data);
+
+// 优惠卷设置
+export const postAdminConfigCoupon = async (data: any) =>
+  await request.post("/api/admin/config/coupon", data);
+
+// 个人信息
+export const PersonalInformation = async () =>
+  await request.get("/api/admin/info");
+
+// 修改密码
+export const updataPassword = async (data: {
+  oldpwd: string;
+  adminPwd: string;
+  confirmPwd: string;
+}) => await request.put("/api/admin/updatepwd", data);
+
+// 个人信息设置
+export const PersonalSettings = async (data: {
+  mobileNumber: string;
+  realName: string;
+  avatarUrl: object;
+}) => await request.put("/api/admin/update/self", data);

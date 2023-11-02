@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { type FC, useMemo, useState } from "react";
 import { Outlet, useNavigate, Navigate } from "react-router-dom";
@@ -6,6 +7,9 @@ import type { MenuProps } from "antd";
 import { Menu, Layout, Popover } from "antd";
 import { Icon } from "@iconify/react";
 import checkPermission from "@/utils/checkPermission";
+import { PersonalInformation } from "@/service/api";
+import { useRequest } from "ahooks";
+import Cookies from "js-cookie";
 
 const Wrapper = styled.div`
   .ant-menu-item::after {
@@ -53,6 +57,9 @@ const Wrapper = styled.div`
 
 const layout: FC = () => {
   const navigate = useNavigate();
+  const { data } = useRequest(PersonalInformation);
+  const Information = data?.data.data;
+  console.log(Information);
 
   // 路径
   const UrlArr = [
@@ -232,14 +239,14 @@ const layout: FC = () => {
 
   // 右上角个人信息弹窗
   const content = (
-    <div className="h-[238px] w-[240px] m-[-12px]">
-      <div className="h-[88px] w-[100%] bg-gradient-to-r from-[#667BD0] to-[#D9A0FE] flex justify-between items-center rounded-t-[3px]">
-        <div className="h-[50px] pl-[15px]">
-          <div className="flex text-[20px] text-[#fff]">
-            <p className="mr-[10px]">Info.realName</p>
-            <p>Info.mobileNumber</p>
+    <div className="h-[238px] w-[240px] m-[-12px] overflow-hidden">
+      <div className="w-[100%] bg-gradient-to-r from-[#667BD0] to-[#D9A0FE] rounded-t-[3px]">
+        <div className="pl-[15px]">
+          <div className="text-[20px] text-[#fff] py-[10px]">
+            <span>{Information?.realName}</span>&nbsp;
+            <span>{Information?.mobileNumber}</span>
+            <p className="text-[#fff] text-[12px]">NO:{Information?.adminNo}</p>
           </div>
-          <div className="text-[#fff]">NO:Info.adminNo</div>
         </div>
       </div>
       <div className="w-[100%] border-b">
@@ -250,6 +257,7 @@ const layout: FC = () => {
           }}
         >
           <Icon icon="ic:sharp-settings" />
+          &nbsp;
           <div>个人设置</div>
         </div>
         <div
@@ -259,10 +267,17 @@ const layout: FC = () => {
           }}
         >
           <Icon icon="ph:lock-key-fill" />
+          &nbsp;
           <div>修改密码</div>
         </div>
       </div>
-      <div className="h-[50px] w-[100%] pl-[30px] cursor-pointer flex items-center justify-start hover:bg-[#F3F3F3]">
+      <div
+        className="h-[50px] w-[100%] pl-[30px] cursor-pointer flex items-center justify-start hover:bg-[#F3F3F3]"
+        onClick={() => {
+          Cookies.remove("token"); // 删除token
+          navigate("/login");
+        }}
+      >
         退出登录
       </div>
     </div>
