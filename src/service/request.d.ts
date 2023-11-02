@@ -19,15 +19,27 @@ namespace Req {
     userNo?: string;
   };
   type Valuation = {
-    ruleName: string;
     current: number;
     pageSize: number;
   };
-  type ValFount = {
-    ruleName: string;
-    current: number;
-    pageSize: number;
+  type DelVal = {
+    id: number;
   };
+
+  type AddVal = {
+    ruleName: string;
+    ruleContext: {
+      distance: {
+        gt: number;
+        lte: number;
+        unitDistance: number;
+        price: number;
+      }[];
+      weight: { gt: number; lte: number; unitWeight: number; price: number }[];
+      time: { gt: number; lte: number; price: number }[];
+    };
+  };
+
   type Weight = {
     tagName: string;
     current: number;
